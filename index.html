@@ -27,47 +27,7 @@
 
     <!-- Скрипты -->
     <script src="script.js"></script>
-    let shot = document.querySelector('.shot'),
-    hit = document.querySelector('.hit'),
-    count = document.querySelector('.count strong'),
-    counter = 0;
-
-document.body.addEventListener('click', playShotHandler);
-
-function playShotHandler(e) {
-    let el = e.target;
-    if (el.classList.contains('beer')) {
-        playHit();
-        counter++;
-        count.textContent = counter;
-        el.classList.add('die');
-        if (counter === 5) {
-            setTimeout(replay, 400);
-        }
-    }
-    playShot();
-}
-
-function playShot() {
-    shot.pause(); // Остановить звук, если он играет
-    shot.currentTime = 0; // Вернуться к началу
-    shot.play(); // Проиграть звук
-}
-
-function playHit() {
-    hit.pause(); // Остановить звук, если он играет
-    hit.currentTime = 0; // Вернуться к началу
-    hit.play(); // Проиграть звук
-}
-
-function replay() {
-    let died = document.querySelectorAll('.beer');
-    died.forEach(function (item) {
-        item.classList.remove('die');
-    });
-    counter = 0;
-    count.textContent = counter;
-}
+   
     
     <!-- Также вставьте ваши аудио элементы, если они есть -->
     <audio class="shot" src="https://res.cloudinary.com/dovwumaes/video/upload/v1728826923/16557_1460656892_hz1zdl.mp3"></audio>
