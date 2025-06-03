@@ -1,0 +1,75 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    cursor: url(https://res.cloudinary.com/dspfsamgq/image/upload/v1579257122/5a3755ce3a48f0.7723702415135758862387_jvy9hf.png), default;
+}
+
+.table {
+    width: 90%;
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    border-bottom: 10px solid brown;
+}
+
+/* Анимация для пива */
+.beer {
+    width: 70px;
+    height: 70px;
+    background: url(https://res.cloudinary.com/dovwumaes/image/upload/v1748346798/tarmet_catalog_round_rcsbvv.png) center bottom/100px auto no-repeat;
+    padding-top: 25px;
+    transform-origin: 50% bottom;
+    animation: beerMovement 2s infinite alternate; /* Добавлена анимация движения */
+}
+
+/* Анимация движения из стороны в сторону */
+@keyframes beerMovement {
+    0% {
+        transform: translateX(0); /* Начальная позиция */
+    }
+    50% {
+        transform: translateX(-50px); /* Движение налево */
+    }
+    100% {
+        transform: translateX(50px); /* Движение направо */
+    }
+}
+
+/* Ключевые кадры для анимации падения */
+@keyframes beerFall {
+    0% {
+        transform: translateY(0); /* Начальное положение */
+        opacity: 1; /* Полная видимость */
+    }
+    100% {
+        transform: translateY(100px) rotate(15deg); /* Падает вниз и поворачивается */
+        opacity: 0; /* Исчезает по мере падения */
+    }
+}
+
+/* Элемент, который будет загибаться */
+.die {
+    width: 70px;
+    height: 70px;
+    background: red; /* Для визуализации */
+    transform-origin: 50% bottom;
+    opacity: 0; /* Изначально невидимый */
+}
+
+.die.impact {
+    animation: dieImpact 0.5s forwards; /* Анимация складывания и перетаскивания */
+    opacity: 1; /* Становится видимым */
+}
+
+@keyframes dieImpact {
+    0% {
+        transform: scale(1); /* Исходный размер */
+    }
+    100% {
+        transform: scale(0.5) rotate(45deg); /* Складывание и поворот */
+    }
+}
