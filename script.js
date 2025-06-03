@@ -1,37 +1,40 @@
-const countElem = document.querySelector('.count strong');
-const beers = document.querySelectorAll('.beer');
-const shotSound = document.querySelector('.shot');
-const hitSound = document.querySelector('.hit');
-const aim = document.querySelector('.aim');
+const shot = document.querySelector('.shot');
+const hit = document.querySelector('.hit');
+const count = document.querySelector('.count strong');
+let counter = 0;
 
-let score = 0;
+document.body.addEventListener('click', playShotHandler);
 
-document.querySelector('.table').addEventListener('click', (e) => {
-    if (e.target.classList.contains('beer')) {
-        // Воспроизвести звук попадания
-        hitSound.currentTime = 0;
-        hitSound.play();
-
-        // Обновить счет
-        score++;
-        countElem.textContent = score;
-
-        // Анимация попадания
-        e.target.classList.add('hit');
-
-        // Удалить банку через короткое время
-        setTimeout(() => {
-            e.target.remove();
-        }, 300);
+function playShotHandler(e) {
+    let el = e.target;
+    if (el.classList.contains('beer')) {
+        playHit();
+        counter++;
+        count.textContent = counter;
+        el.classList.add('die');
+        if (counter === 5) {
+            setTimeout(replay, 400);
+        }
     }
+    playShot();
+}
 
-    // Воспроизвести выстрел
-    shotSound.currentTime = 0;
-    shotSound.play();
-});
+function playShot() {
+    shot.pause();
+    shot.currentTime = 0;
+    shot.play();
+}
 
-// Обновление положения прицела по движению мыши
-document.addEventListener('mousemove', (e) => {
-    aim.style.left = e.pageX + 'px';
-    aim.style.top = e.pageY + 'px';
-});
+function playHit() {
+    hit.pause();
+    hit.currentTime = 0;
+    hit.play();
+}
+
+function replay() {
+    document.querySelectorAll('.beer').forEach(function(item) {
+        item.classList.remove('die');
+    });
+    counter = 0;
+    count.textContent = counter;
+}
