@@ -1,41 +1,37 @@
-let shot = document.querySelector('.shot'),
-    hit = document.querySelector('.hit'),
-    count = document.querySelector('.count strong'),
-    counter = 0;
+const countElem = document.querySelector('.count strong');
+const beers = document.querySelectorAll('.beer');
+const shotSound = document.querySelector('.shot');
+const hitSound = document.querySelector('.hit');
+const aim = document.querySelector('.aim');
 
-document.body.addEventListener('click', playShotHandler);
+let score = 0;
 
-function playShotHandler(e) {
-    let el = e.target;
-    if (el.classList.contains('beer')) {
-        playHit();
-        counter++;
-        count.textContent = counter;
-        el.classList.add('die');
-        if (counter === 5) {
-            setTimeout(replay, 400);
-        }
+document.querySelector('.table').addEventListener('click', (e) => {
+    if (e.target.classList.contains('beer')) {
+        // Воспроизвести звук попадания
+        hitSound.currentTime = 0;
+        hitSound.play();
+
+        // Обновить счет
+        score++;
+        countElem.textContent = score;
+
+        // Анимация попадания
+        e.target.classList.add('hit');
+
+        // Удалить банку через короткое время
+        setTimeout(() => {
+            e.target.remove();
+        }, 300);
     }
-    playShot();
-}
 
-function playShot() {
-    shot.pause(); // Остановить звук, если он играет
-    shot.currentTime = 0; // Вернуться к началу
-    shot.play(); // Проиграть звук
-}
+    // Воспроизвести выстрел
+    shotSound.currentTime = 0;
+    shotSound.play();
+});
 
-function playHit() {
-    hit.pause(); // Остановить звук, если он играет
-    hit.currentTime = 0; // Вернуться к началу
-    hit.play(); // Проиграть звук
-}
-
-function replay() {
-    let died = document.querySelectorAll('.beer');
-    died.forEach(function (item) {
-        item.classList.remove('die');
-    });
-    counter = 0;
-    count.textContent = counter;
-}
+// Обновление положения прицела по движению мыши
+document.addEventListener('mousemove', (e) => {
+    aim.style.left = e.pageX + 'px';
+    aim.style.top = e.pageY + 'px';
+});
